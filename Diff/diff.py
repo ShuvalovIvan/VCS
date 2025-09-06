@@ -1,5 +1,10 @@
+def cmd_diff():
+    """Show differences"""
+    print("diff command called")
+
+
 class Diff:
-    
+
     def cmd_diff():
         """Show differences"""
         print("diff command called")
@@ -9,16 +14,17 @@ class Diff:
 
     def diff(file_path1, file_path2):
         return 0
-    
+
     def read_file(self, file_path):
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                return [line.rstrip('\n\r') for line in f.readlines()]
+            with open(file_path, "r", encoding="utf-8") as f:
+                return [line.rstrip("\n\r") for line in f.readlines()]
         except FileNotFoundError:
             return []
-        
+
+
 diff = Diff()
 
-textline = diff.diff('test.txt')
+textline = diff.diff("test.txt")
 
 print(textline)
