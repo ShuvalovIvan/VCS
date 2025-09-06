@@ -2,14 +2,24 @@ import os
 
 
 def cmd_status():
-    """Show working tree status"""
-    print("status command called")
+    """Show the status of the repository"""
+    if status.repository_exists():
+        print("Repository is initialized and has the correct structure.")
+    else:
+        print("No VCS repository found. Please run 'init' to create one.")
 
 
 class Status:
 
+    def __init__(self):
+        self
+
     def repository_exists():
-        # Check if .vcs directory exists
+        """
+        Check if .vcs repository exists with required structure
+
+        Returns:
+            bool: True if repository exists, False otherwise"""
         folder_exists = os.path.isdir(".vcs")
 
         json_exists = (
