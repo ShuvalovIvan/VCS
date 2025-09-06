@@ -25,6 +25,8 @@ class Diff:
 
 diff = Diff()
 
-textline = diff.diff("test.txt")
+textline = diff.diff('test.txt')
 
 print(textline)
+print(os.getcwd())  # Current directory
+print(os.listdir('.'))  # Files in current dir
