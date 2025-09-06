@@ -1,18 +1,22 @@
 import os
+import json
 
 def cmd_init():
     """Initialize a new repository"""
     print("init command called")
+
     current_dir = os.getcwd()
-    os.makedirs(current_dir + "/.vcs/objects", exist_ok=True)
-    os.makedirs(current_dir + "/.vcs/refs/heads", exist_ok=True)
+    os.makedirs(current_dir + "/.vcs/", exist_ok=True)
 
-    with open(current_dir + ".vcs/HEAD", "w") as f:
-        f.write("ref: refs/heads/main\n")
+    if not os.path.exists(current_dir + "/.vcs/main.json"):
+        with open(current_dir + "/.vcs/main.json", "w", encoding='utf-8') as f:
+            json.dump({}, f)
+    else:
+        print("Repository exists")
+    if not os.path.exists(current_dir + "/.vcs/data/status.json"):
+        with open(current_dir + "/.vcs/data/status.json", "w", encoding='utf-8') as f:
+            json.dump({"branch", "main"}, f)
+    else:
+        print("Data status exists")
 
-    open(current_dir + "/.vcs/index", "w").close()
-    open(current_dir + "/.vcs/config", "w").close()
-    open(current_dir + "/.vcs/description", "w").close()
-    open(current_dir + "/.vcs/refs/heads/main", "w").close()
-
-    print(f"Initialized empty VCS repository in {current_dir}/.vcs/")
+    
