@@ -1,7 +1,5 @@
-
 {
-  "file": "main.txt",
-  "versions": [
+  "main.txt": [
     {
       "version": 0,
       "timestamp": "2024-01-01T10:00:00Z",

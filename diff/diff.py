@@ -2,7 +2,10 @@ def cmd_diff():
     """Show differences"""
     print("diff command called")
 
+
 import os
+
+
 class Diff:
 
     def cmd_diff():
@@ -25,8 +28,4 @@ class Diff:
 
 diff = Diff()
 
-textline = diff.diff('test.txt')
-
-print(textline)
-print(os.getcwd())  # Current directory
-print(os.listdir('.'))  # Files in current dir
+textline = diff.diff("test.txt")
