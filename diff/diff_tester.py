@@ -3,9 +3,10 @@ import os
 
 diff = Diff()
 
-testFile = os.path.abspath('test.txt')
+file1 = os.path.abspath('file1.txt')
+file2 = os.path.abspath('file2.txt')
+lines1 = diff.read_file(file1)
+lines2 = diff.read_file(file2)
 
-read_file = diff.read_file(testFile)
-
-for i in range(len(read_file)):
-    print(read_file[i])
+# print(diff.print_diff_operationss(read_file, read_file))
+print(diff.print_diff_operations(file1, file2))
