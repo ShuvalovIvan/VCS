@@ -8,7 +8,6 @@ Usage:
 """
 
 import sys
-import os
 from init.init import cmd_init
 from commit.commit import cmd_commit
 from status.status import cmd_status, status
@@ -40,9 +39,9 @@ def show_help(command):
 def print_main_help():
     """Print the main help menu with colors"""
     title = f"""
-{colorize('━' * 50, Colors.BLUE)}
-{colorize('  VCS - Version Control System', Colors.BOLD + Colors.CYAN)}
-{colorize('━' * 50, Colors.BLUE)}
+{colorize("━" * 50, Colors.BLUE)}
+{colorize("  VCS - Version Control System", Colors.BOLD + Colors.CYAN)}
+{colorize("━" * 50, Colors.BLUE)}
 """
 
     print(title)
@@ -107,7 +106,6 @@ def main():
 
     command = sys.argv[1]
 
-
     # Check for help flag as second argument
     if len(sys.argv) > 2 and sys.argv[2] in ["--help", "-h"]:
         show_help(command)
@@ -119,7 +117,7 @@ def main():
             show_help("init")
         else:
             cmd_init()
-    
+
     elif not status.repository_exists():
         print("Error: No VCS repository found. Please run 'init' first.")
         return
