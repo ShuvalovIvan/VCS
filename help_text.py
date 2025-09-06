@@ -1,4 +1,10 @@
-from Colors import Colors, colorize
+from Colors import Colors
+
+
+def colorize(text, color):
+    """Apply color to text"""
+    return f"{color}{text}{Colors.RESET}"
+
 
 help_text = {
     "init": f"""
