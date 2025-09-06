@@ -1,5 +1,5 @@
 import os
-
+from status.status import status
 
 def cmd_commit(message=""):
     """Create a commit with optional message"""
