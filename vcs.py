@@ -16,7 +16,7 @@ from log.log import cmd_log
 from branch.branch import cmd_branch
 from checkout.checkout import cmd_checkout
 from merge.merge import cmd_merge
-from diff.diff import cmd_diff
+from diff.diff_class import cmd_diff
 from Colors import Colors
 from help_text import help_text
 
