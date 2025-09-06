@@ -7,7 +7,7 @@ def cmd_branch(name=None):
     current_dir = os.getcwd()
     current_branch = branch.get_current()
     if name:
-        shutil.copy2(current_dir + "/" + current_branch + ".json", current_dir + "/" + name + ".json")
+        shutil.copy2(current_dir + "/.vcs/" + current_branch + ".json", current_dir + "/.vcs/"  + name + ".json")
     else:
         branch.print_branches()
 
