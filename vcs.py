@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
 VCS - Simple Version Control System
-Minimal command interpreter for basic VCS operations.
+Minimal command interpreter for basic VCS operations with colored output.
 
 Usage:
     python vcs.py <command> [args]
 """
 
 import sys
+import os
 from init.init import cmd_init
 from commit.commit import cmd_commit
 from status.status import cmd_status
@@ -16,125 +17,92 @@ from branch.branch import cmd_branch
 from checkout.checkout import cmd_checkout
 from merge.merge import cmd_merge
 from diff.diff import cmd_diff
+from Colors import Colors
+from help_text import help_text
+
+
+def colorize(text, color):
+    """Apply color to text"""
+    return f"{color}{text}{Colors.RESET}"
 
 
 def show_help(command):
     """Show help for a specific command"""
-    help_text = {
-        "init": """
-Usage: python vcs.py init
-
-Initialize a new VCS repository in the current directory.
-This creates a .vcs directory with the necessary structure
-to track file changes and manage version history.
-
-Example:
-    python vcs.py init
-""",
-        "commit": """
-Usage: python vcs.py commit [-m 'message']
-
-Record changes to the repository. Creates a snapshot of the
-current state of tracked files.
-
-Options:
-    -m 'message'    Specify a commit message (optional)
-                    If omitted, creates commit with empty message
-
-Examples:
-    python vcs.py commit                  # Commit with empty message
-    python vcs.py commit -m "Fix bug"     # Commit with message
-""",
-        "status": """
-Usage: python vcs.py status
-
-Show the working tree status. Displays which files have been
-modified, added, or deleted since the last commit.
-
-Example:
-    python vcs.py status
-""",
-        "log": """
-Usage: python vcs.py log
-
-Show commit history. Displays a list of all commits made to
-the repository in reverse chronological order.
-
-Example:
-    python vcs.py log
-""",
-        "branch": """
-Usage: python vcs.py branch [name]
-
-List existing branches or create a new branch.
-
-Arguments:
-    name    Optional. If provided, creates a new branch with this name.
-            If omitted, lists all existing branches.
-
-Examples:
-    python vcs.py branch            # List all branches
-    python vcs.py branch feature    # Create branch named 'feature'
-""",
-        "checkout": """
-Usage: python vcs.py checkout <branch>
-
-Switch to a different branch. Updates files in the working
-directory to match the specified branch.
-
-Arguments:
-    branch    Required. Name of the branch to switch to.
-
-Example:
-    python vcs.py checkout main      # Switch to 'main' branch
-    python vcs.py checkout feature   # Switch to 'feature' branch
-""",
-        "merge": """
-Usage: python vcs.py merge <branch>
-
-Merge changes from the specified branch into the current branch.
-Combines the development histories of two branches.
-
-Arguments:
-    branch    Required. Name of the branch to merge from.
-
-Example:
-    python vcs.py merge feature    # Merge 'feature' into current branch
-""",
-        "diff": """
-Usage: python vcs.py diff
-
-Show changes between commits or between the working directory
-and the last commit. Displays line-by-line differences.
-
-Example:
-    python vcs.py diff
-""",
-    }
 
     if command in help_text:
         print(help_text[command])
     else:
-        print(f"No help available for command: {command}")
+        print(
+            f"{colorize('Error:', Colors.RED)} No help available for command: {colorize(command, Colors.YELLOW)}"
+        )
+
+
+def print_main_help():
+    """Print the main help menu with colors"""
+    title = f"""
+{colorize('━' * 50, Colors.BLUE)}
+{colorize('  VCS - Version Control System', Colors.BOLD + Colors.CYAN)}
+{colorize('━' * 50, Colors.BLUE)}
+"""
+
+    print(title)
+    print(
+        f"{colorize('Usage:', Colors.YELLOW)} {colorize('python vcs.py', Colors.CYAN)} {colorize('<command>', Colors.GREEN)} {colorize('[args]', Colors.GRAY)}"
+    )
+    print()
+    print(f"{colorize('Available commands:', Colors.YELLOW)}")
+
+    commands = [
+        ("init", "Initialize repository"),
+        ("commit", "Create a commit", '[-m "message"]'),
+        ("status", "Show status"),
+        ("log", "Show commit history"),
+        ("branch", "List or create branch", "[name]"),
+        ("checkout", "Switch branches", "<branch>"),
+        ("merge", "Merge branch", "<branch>"),
+        ("diff", "Show differences"),
+    ]
+
+    for cmd_info in commands:
+        cmd = cmd_info[0]
+        desc = cmd_info[1]
+        args = cmd_info[2] if len(cmd_info) > 2 else ""
+
+        # Format command with padding
+        cmd_str = f"  {colorize(cmd, Colors.GREEN)}"
+        if args:
+            cmd_str += f" {colorize(args, Colors.MAGENTA)}"
+
+        # Calculate padding for alignment
+        padding = (
+            35
+            - len(cmd_str)
+            + len(colorize("", Colors.GREEN))
+            + len(colorize("", Colors.MAGENTA))
+        )
+
+        print(f"{cmd_str}{' ' * max(1, padding)}{desc}")
+
+    print()
+    print(f"{colorize('For help on a specific command, use:', Colors.YELLOW)}")
+    print(
+        f"  {colorize('python vcs.py', Colors.CYAN)} {colorize('<command>', Colors.GREEN)} {colorize('--help', Colors.MAGENTA)}"
+    )
+    print(
+        f"  {colorize('python vcs.py', Colors.CYAN)} {colorize('<command>', Colors.GREEN)} {colorize('-h', Colors.MAGENTA)}"
+    )
+    print()
+
+
+def print_error(message):
+    """Print an error message with color"""
+    print(f"{colorize('Error:', Colors.RED)} {message}")
 
 
 def main():
     """Main entry point"""
     if len(sys.argv) < 2:
-        print("VCS - Version Control System\n")
-        print("Usage: python vcs.py <command> [args]")
-        print("\nAvailable commands:")
-        print("  init                     Initialize repository")
-        print("  commit [-m 'message']    Create a commit")
-        print("  status                   Show status")
-        print("  log                      Show commit history")
-        print("  branch [name]            List or create branch")
-        print("  checkout <branch>        Switch branches")
-        print("  merge <branch>           Merge branch")
-        print("  diff                     Show differences")
-        print("\nFor help on a specific command, use:")
-        print("  python vcs.py <command> --help")
-        print("  python vcs.py <command> -h")
+        print_main_help()
         sys.exit(1)
 
     command = sys.argv[1]
@@ -185,9 +153,13 @@ def main():
         else:
             # Requires branch name
             if len(sys.argv) < 3:
-                print("Error: checkout requires a branch name")
-                print("Usage: python vcs.py checkout <branch>")
-                print("For more help: python vcs.py checkout --help")
+                print_error("checkout requires a branch name")
+                print(
+                    f"{colorize('Usage:', Colors.YELLOW)} {colorize('python vcs.py checkout', Colors.CYAN)} {colorize('<branch>', Colors.GREEN)}"
+                )
+                print(
+                    f"{colorize('For more help:', Colors.GRAY)} python vcs.py checkout --help"
+                )
                 sys.exit(1)
             cmd_checkout(sys.argv[2])
 
@@ -198,9 +170,13 @@ def main():
         else:
             # Requires branch name
             if len(sys.argv) < 3:
-                print("Error: merge requires a branch name")
-                print("Usage: python vcs.py merge <branch>")
-                print("For more help: python vcs.py merge --help")
+                print_error("merge requires a branch name")
+                print(
+                    f"{colorize('Usage:', Colors.YELLOW)} {colorize('python vcs.py merge', Colors.CYAN)} {colorize('<branch>', Colors.GREEN)}"
+                )
+                print(
+                    f"{colorize('For more help:', Colors.GRAY)} python vcs.py merge --help"
+                )
                 sys.exit(1)
             cmd_merge(sys.argv[2])
 
@@ -208,10 +184,11 @@ def main():
         cmd_diff()
 
     else:
-        print(f"Error: Unknown command '{command}'")
-        print("Use 'python vcs.py' to see available commands")
+        print_error(f"Unknown command '{colorize(command, Colors.YELLOW)}'")
+        print(
+            f"Use '{colorize('python vcs.py', Colors.CYAN)}' to see available commands"
+        )
         sys.exit(1)
-
 
 if __name__ == "__main__":
     main()
