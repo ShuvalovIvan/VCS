@@ -107,9 +107,6 @@ def main():
 
     command = sys.argv[1]
 
-    if not status.repository_exists():
-        print("Error: No VCS repository found. Please run 'init' first.")
-        return
 
     # Check for help flag as second argument
     if len(sys.argv) > 2 and sys.argv[2] in ["--help", "-h"]:
@@ -122,6 +119,10 @@ def main():
             show_help("init")
         else:
             cmd_init()
+    
+    elif not status.repository_exists():
+        print("Error: No VCS repository found. Please run 'init' first.")
+        return
 
     elif command == "commit":
         # Check for help flag first
