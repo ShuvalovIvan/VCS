@@ -3,10 +3,7 @@ import os
 
 def cmd_status():
     """Show the status of the repository"""
-    if status.repository_exists():
-        print("Repository is initialized and has the correct structure.")
-    else:
-        print("No VCS repository found. Please run 'init' to create one.")
+    status.status()
 
 
 class Status:
@@ -14,7 +11,7 @@ class Status:
     def __init__(self):
         self
 
-    def repository_exists():
+    def repository_exists(self):
         """
         Check if .vcs repository exists with required structure
 
@@ -31,6 +28,22 @@ class Status:
         data_exists = os.path.isdir(".vcs/data") if folder_exists else False
 
         return folder_exists and json_exists and data_exists
+
+    def status(self):
+        """Display the status of the repository"""
+        current_branch = None  # Should be branch name
+        unmodified_changes = None  # Should be T or F
+
+        if self.repository_exists():
+            print(f"On branch: {current_branch if current_branch else 'NO BRANCH'}")
+
+            if unmodified_changes:
+                print("No changes to commit, working tree clean")
+            else:
+                print("You have uncommitted changes.")
+
+        else:
+            print("No VCS repository found. Please run 'init' to create one.")
 
 
 status = Status()
