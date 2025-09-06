@@ -4,17 +4,16 @@ def cmd_diff():
 
 class Diff:
 
-    def cmd_diff():
-        """Show differences"""
-        print("diff command called")
-
     def init(self):
         pass
 
-    def diff(self, current_file_path, prev_file_as_string: str):
+    def diff_defualt(self, current_file_path, prev_file_as_string: str):
         lines1 = self.read_file(current_file_path)
         lines2 = prev_file_as_string.splitlines()
+        self.diff(lines1, lines2)
+        
 
+    def diff(self, lines1, lines2):
         operations = self.gen_diff_operations(lines1, lines2)
         formatted = self.format_operations_for_console(operations)
         self.print_console_format(formatted)
