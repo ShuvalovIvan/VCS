@@ -1,0 +1,31 @@
+
+{
+  "file": "main.txt",
+  "versions": [
+    {
+      "version": 0,
+      "timestamp": "2024-01-01T10:00:00Z",
+      "author": "user1",
+      "message": "Initial commit",
+      "hash": "5d41402abc4b2a76b9719d911017c592",
+      "type": "full",
+      "content": "hello world"
+    },
+    {
+      "version": 1,
+      "timestamp": "2024-01-01T10:30:00Z",
+      "author": "user1",
+      "message": "Added greeting",
+      "hash": "8b1a9953c4611296a827abf8c47804d7",
+      "parent": 0,
+      "type": "delta",
+      "operations": [
+        {
+          "op": "insert",
+          "line": 1,
+          "text": "\nhello again"
+        }
+      ]
+    }
+  ]
+}
