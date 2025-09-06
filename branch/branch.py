@@ -4,10 +4,8 @@ import shutil
 
 def cmd_branch(name=None):
     """List branches or create a new one"""
-    current_dir = os.getcwd()
-    current_branch = branch.get_current()
     if name:
-        shutil.copy2(current_dir + "/.vcs/" + current_branch + ".json", current_dir + "/.vcs/"  + name + ".json")
+        branch.create_branch(name)
     else:
         branch.print_branches()
 
@@ -26,6 +24,15 @@ class Branch:
                     print(Colors.GREEN + file[:-5] + Colors.RESET)
                 else:
                     print(file[:-5])
+    
+    def create_branch(self, name):
+        current_dir = os.getcwd()
+        current_branch = branch.get_current()
+        if os.path.exists(current_dir + f"/.vcs/{name}.json"):
+            print(Colors.RED + "Branch already exists" + Colors.RESET)
+        else:
+            shutil.copy2(current_dir + "/.vcs/" + current_branch + ".json", current_dir + "/.vcs/"  + name + ".json")
+            print(f"{Colors.GREEN}{name} branch created{Colors.RESET}")
 
 
 
