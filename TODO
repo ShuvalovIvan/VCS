@@ -3,3 +3,7 @@ TODO:
   - Create colorful git differences
   - Release project as package so it can be installed via pip and used as a CLI tool like git
   - Readme
+
+
+Other Features:
+ - git restore 

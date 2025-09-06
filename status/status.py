@@ -1,5 +1,7 @@
 import os
 
+from branch.branch import branch
+
 
 def cmd_status():
     """Show the status of the repository"""
@@ -7,7 +9,6 @@ def cmd_status():
 
 
 class Status:
-
     def __init__(self):
         self
 
@@ -32,7 +33,7 @@ class Status:
 
     def status(self):
         """Display the status of the repository"""
-        current_branch = None  # Should be branch name
+        current_branch = branch.get_current()
         unmodified_changes = None  # Should be T or F
 
         if self.repository_exists():
