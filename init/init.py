@@ -4,7 +4,7 @@ from status.status import status
 
 def cmd_init():
     """Initialize a new repository"""
-    print("init command called")
+    print("Repository Initialized")
 
     if status.repository_exists():
         raise ValueError("Repository already exists")
