@@ -1,10 +1,14 @@
 import os
 import json
+from status.status import status
 
 def cmd_init():
     """Initialize a new repository"""
     print("init command called")
 
+    if status.repository_exists():
+        raise ValueError("Repository already exists")
+    
     current_dir = os.getcwd()
     os.makedirs(current_dir + "/.vcs/", exist_ok=True)
 
@@ -18,5 +22,7 @@ def cmd_init():
             json.dump({"branch", "main"}, f)
     else:
         print("Data status exists")
+
+    
 
     
