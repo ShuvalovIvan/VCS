@@ -2,7 +2,7 @@ def cmd_diff():
     """Show differences"""
     print("diff command called")
 
-
+import os
 class Diff:
 
     def cmd_diff():
