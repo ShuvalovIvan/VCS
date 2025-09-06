@@ -45,14 +45,14 @@ class Diff:
         j = len(file2_lines)
         while (i > 0 or j > 0):
             if i > 0 and j > 0 and file1_lines[i-1] == file2_lines[j-1]:
-                operations.append(('=', i-1, file1_lines[i-1]))
+                operations.append(('=', i, j, file1_lines[i-1]))
                 i -= 1
                 j -= 1
             elif i > 0 and (j == 0 or lcs_matrix[i-1][j] >= lcs_matrix[i][j-1]):
-                operations.append(('-', i-1, file1_lines[i-1]))
+                operations.append(('+', i, " ", file1_lines[i-1]))
                 i -= 1
             else:
-                operations.append(('+', j-1, file2_lines[j-1]))
+                operations.append(('-', " ", j, file2_lines[j-1]))
                 j -= 1
         operations.reverse()
         return operations
@@ -62,4 +62,5 @@ class Diff:
         lines2 = self.read_file(file2)
         operations = self.gen_diff_operations(lines1, lines2)
         for i in range(len(operations)):
-            print(f"{operations[i][0]} {operations[i][1]} {operations[i][2]}")
+            
+            print(f"{operations[i][0]} {operations[i][1]} {operations[i][2]} {operations[i][3]}")
