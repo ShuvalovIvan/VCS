@@ -15,18 +15,10 @@ class Diff:
     def diff(file_path1, file_path2):
         return 0
 
+    # assumes full working filepath is passed in
     def read_file(self, file_path):
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 return [line.rstrip("\n\r") for line in f.readlines()]
         except FileNotFoundError:
             return []
-
-
-diff = Diff()
-
-textline = diff.diff('test.txt')
-
-print(textline)
-print(os.getcwd())  # Current directory
-print(os.listdir('.'))  # Files in current dir
