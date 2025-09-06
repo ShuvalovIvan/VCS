@@ -11,7 +11,7 @@ import sys
 import os
 from init.init import cmd_init
 from commit.commit import cmd_commit
-from status.status import cmd_status
+from status.status import cmd_status, status
 from log.log import cmd_log
 from branch.branch import cmd_branch
 from checkout.checkout import cmd_checkout
@@ -107,6 +107,10 @@ def main():
 
     command = sys.argv[1]
 
+    if not status.repository_exists():
+        print("Error: No VCS repository found. Please run 'init' first.")
+        return
+
     # Check for help flag as second argument
     if len(sys.argv) > 2 and sys.argv[2] in ["--help", "-h"]:
         show_help(command)
@@ -189,6 +193,7 @@ def main():
             f"Use '{colorize('python vcs.py', Colors.CYAN)}' to see available commands"
         )
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

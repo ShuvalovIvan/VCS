@@ -16,7 +16,8 @@ class Status:
         Check if .vcs repository exists with required structure
 
         Returns:
-            bool: True if repository exists, False otherwise"""
+            bool: True if repository exists, False otherwise
+        """
         folder_exists = os.path.isdir(".vcs")
 
         json_exists = (
