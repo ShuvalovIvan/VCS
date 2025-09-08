@@ -1,6 +1,7 @@
 TODO:
   - Complete stuff in: https://docs.google.com/document/d/1FWhzATrCx-vePoblEweck3iqOaQQbx7kZpRh2EUJwPk/edit?tab=t.0
   - Create colorful git differences
+    - (Maybe) Move Color functionality colorize() from vcs.py to Colors.py or similar for better use by other classes that need it
   - Release project as package so it can be installed via pip and used as a CLI tool like git
   - Readme + demo video
 
